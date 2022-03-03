@@ -1,5 +1,6 @@
 package com.starwars.StarWarsAPI.dto;
 
+import com.starwars.StarWarsAPI.model.Localizacao;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,5 +9,5 @@ public class RebeldeRequest {
     String nome;
     int idade;
     String genero;
-    String nomeDaGalaxia;
+    LocalizacaoRequest localizacao;
 }

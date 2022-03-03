@@ -9,7 +9,7 @@ import com.starwars.StarWarsAPI.model.Rebelde;
 public class RebeldeService {
 
     public Rebelde criaRebelde(RebeldeRequest rebeldeRequest) {
-        Localizacao localizacao = new Localizacao(rebeldeRequest.getNomeDaGalaxia());
+        Localizacao localizacao = new Localizacao(rebeldeRequest.getLocalizacao().getNomeDaGalaxia());
         Rebelde rebelde = new Rebelde(rebeldeRequest.getNome(), rebeldeRequest.getIdade(), rebeldeRequest.getGenero(), localizacao);
         StarWarsApiApplication.bdRebeldes.addRebelde(rebelde);
         return rebelde;
