@@ -43,4 +43,12 @@ public class RebeldeController {
         Rebelde rebelde = StarWarsApiApplication.bdRebeldes.buscaRebelde(id);
         return ResponseEntity.accepted().body(new RebeldeResponse(rebelde));
     }
+
+    @PatchMapping("/atualizarlocalizacao/{id}")
+    @ResponseBody
+    public ResponseEntity<RebeldeResponse> atualizarLocalizacao(@PathVariable UUID id, @RequestBody LocalizacaoRequest localizacaoRequest) throws Exception {
+        ;
+       Rebelde rebelde =  rebeldeService.atualizarLocalizacao(localizacaoRequest,id);
+       return ResponseEntity.ok().body(new RebeldeResponse(rebelde));
+    }
 }
