@@ -28,4 +28,11 @@ public class RebeldeService {
 
         return rebelde;
     }
+
+    public Rebelde reportarTraidor(UUID id) throws Exception{
+        Rebelde rebelde = StarWarsApiApplication.bdRebeldes.buscaRebelde(id);
+        rebelde.reportTraidor();
+        return rebelde;
+    }
 }
+

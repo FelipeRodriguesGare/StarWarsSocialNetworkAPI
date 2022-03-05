@@ -7,13 +7,11 @@ import java.util.UUID;
 
 @Getter @Setter
 public class Localizacao {
-//    UUID id;
-    long latitude;
-    long longitude;
-    String nomeDaGalaxia;
+    private long latitude;
+    private long longitude;
+    private String nomeDaGalaxia;
 
     public Localizacao(String nomeDaGalaxia) {
-//        this.id = UUID.randomUUID();
         this.latitude = gerarCoordenadas();
         this.longitude = gerarCoordenadas();
         this.nomeDaGalaxia = nomeDaGalaxia;
