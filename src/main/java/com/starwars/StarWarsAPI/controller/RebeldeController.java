@@ -47,8 +47,14 @@ public class RebeldeController {
     @PatchMapping("/atualizarlocalizacao/{id}")
     @ResponseBody
     public ResponseEntity<RebeldeResponse> atualizarLocalizacao(@PathVariable UUID id, @RequestBody LocalizacaoRequest localizacaoRequest) throws Exception {
-        ;
        Rebelde rebelde =  rebeldeService.atualizarLocalizacao(localizacaoRequest,id);
        return ResponseEntity.ok().body(new RebeldeResponse(rebelde));
+    }
+
+    @PatchMapping("/traidor/{id}")
+    @ResponseBody
+    public ResponseEntity<RebeldeResponse> reportarTraidor(@PathVariable UUID id) throws Exception {
+        Rebelde rebelde =  rebeldeService.reportarTraidor(id);
+        return ResponseEntity.ok().body(new RebeldeResponse(rebelde));
     }
 }

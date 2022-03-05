@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Getter @Setter
 public class LocalizacaoRequest {
-    String nomeDaGalaxia;
-    Long latitude;
-    Long longitude;
+    private String nomeDaGalaxia;
+    private Long latitude;
+    private Long longitude;
 }
