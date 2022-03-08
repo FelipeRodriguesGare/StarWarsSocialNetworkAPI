@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/rebeldes")
 public class RebeldeController {
     RebeldeService rebeldeService = new RebeldeService();
