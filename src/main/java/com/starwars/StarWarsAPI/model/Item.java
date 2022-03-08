@@ -8,10 +8,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Item {
     protected int pontos;
-    private int quatidade;
+    private int quantidade;
 
     public Item(int pontos){
         this.pontos = pontos;
-        this.quatidade = (int) (Math.random() * 9);
+        this.quantidade = (int) (Math.random() * 9);
     }
 }
