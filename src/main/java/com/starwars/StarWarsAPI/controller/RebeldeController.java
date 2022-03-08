@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,7 @@ public class RebeldeController {
     }
 
     @PostMapping
-    @ResponseBody
-    public ResponseEntity<RebeldeResponse> criaRebelde(@RequestBody RebeldeRequest rebeldeRequest, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity<RebeldeResponse> criaRebelde(@RequestBody @Valid RebeldeRequest rebeldeRequest, UriComponentsBuilder uriComponentsBuilder){
         Rebelde rebelde = rebeldeService.criaRebelde(rebeldeRequest);
         URI uri = uriComponentsBuilder.path("/rebeldes/{id}").buildAndExpand(rebelde.getId()).toUri();
         return ResponseEntity.created(uri).body(new RebeldeResponse(rebelde));

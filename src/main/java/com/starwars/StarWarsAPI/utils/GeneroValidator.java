@@ -13,7 +13,7 @@ public class GeneroValidator implements ConstraintValidator<Genero, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         for (GeneroEnum c : GeneroEnum.values()) {
-            if (c.name().equals(value)) {
+            if (c.name().equals(value.toUpperCase())) {
                 return true;
             }
         }
