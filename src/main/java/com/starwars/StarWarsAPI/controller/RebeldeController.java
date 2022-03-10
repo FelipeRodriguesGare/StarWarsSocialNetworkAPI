@@ -4,6 +4,7 @@ import com.starwars.StarWarsAPI.StarWarsApiApplication;
 import com.starwars.StarWarsAPI.dto.LocalizacaoRequest;
 import com.starwars.StarWarsAPI.dto.RebeldeRequest;
 import com.starwars.StarWarsAPI.dto.RebeldeResponse;
+import com.starwars.StarWarsAPI.exceptions.ResponseMessege;
 import com.starwars.StarWarsAPI.model.Localizacao;
 import com.starwars.StarWarsAPI.model.Rebelde;
 import com.starwars.StarWarsAPI.service.RebeldeService;
@@ -28,45 +29,40 @@ public class RebeldeController {
 
     @GetMapping
     @ResponseBody
-    public ResponseEntity<List<RebeldeResponse>> buscarRebeldes(){
+    public ResponseEntity<Object> buscarRebeldes(){
         List<RebeldeResponse> rebeldeResponse2 = rebeldeResponse.toResponse(StarWarsApiApplication.bdRebeldes.listarRebeldes());
         if(rebeldeResponse2.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(rebeldeResponse2);
+            return new ResponseEntity<>(new ResponseMessege("Não há registro."), HttpStatus.NO_CONTENT);
         }
         return ResponseEntity.ok().body(rebeldeResponse2);
     }
 
     @PostMapping
     public ResponseEntity<RebeldeResponse> criaRebelde(@RequestBody @Valid RebeldeRequest rebeldeRequest, UriComponentsBuilder uriComponentsBuilder){
-        try{
-            Rebelde rebelde = rebeldeService.criaRebelde(rebeldeRequest);
-            URI uri = uriComponentsBuilder.path("/rebeldes/{id}").buildAndExpand(rebelde.getId()).toUri();
-            return ResponseEntity.created(uri).body(new RebeldeResponse(rebelde));
-        }catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-
+        Rebelde rebelde = rebeldeService.criaRebelde(rebeldeRequest);
+        URI uri = uriComponentsBuilder.path("/rebeldes/{id}").buildAndExpand(rebelde.getId()).toUri();
+        return ResponseEntity.created(uri).body(new RebeldeResponse(rebelde));
     }
 
     @GetMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<RebeldeResponse> buscaRebelde(@PathVariable UUID id) throws Exception {
+    public ResponseEntity<Object> buscaRebelde(@PathVariable UUID id) throws Exception {
         try{
             Rebelde rebelde = StarWarsApiApplication.bdRebeldes.buscaRebelde(id);
             return ResponseEntity.accepted().body(new RebeldeResponse(rebelde));
         }catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return new ResponseEntity<>(new ResponseMessege("Registro não encontrado."), HttpStatus.NOT_FOUND);
         }
     }
 
     @PatchMapping("/atualizarlocalizacao/{id}")
     @ResponseBody
-    public ResponseEntity<RebeldeResponse> atualizarLocalizacao(@PathVariable UUID id, @RequestBody LocalizacaoRequest localizacaoRequest) throws Exception {
+    public ResponseEntity<Object> atualizarLocalizacao(@PathVariable UUID id, @RequestBody LocalizacaoRequest localizacaoRequest) throws Exception {
        try{
            Rebelde rebelde =  rebeldeService.atualizarLocalizacao(localizacaoRequest,id);
            return ResponseEntity.ok().body(new RebeldeResponse(rebelde));
        }catch (Exception e){
-           return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+           return new ResponseEntity<>(new ResponseMessege("Registro não encontrado."), HttpStatus.NOT_FOUND);
        }
 
     }
