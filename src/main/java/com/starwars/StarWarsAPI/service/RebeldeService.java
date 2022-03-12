@@ -4,11 +4,9 @@ import com.starwars.StarWarsAPI.StarWarsApiApplication;
 import com.starwars.StarWarsAPI.dto.LocalizacaoRequest;
 import com.starwars.StarWarsAPI.dto.NegociarRequest;
 import com.starwars.StarWarsAPI.dto.RebeldeRequest;
-import com.starwars.StarWarsAPI.model.BDRebeldes;
 import com.starwars.StarWarsAPI.model.Localizacao;
 import com.starwars.StarWarsAPI.model.Rebelde;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class RebeldeService {
@@ -37,21 +35,4 @@ public class RebeldeService {
         return rebelde;
     }
 
-    public void negociar(NegociarRequest negociarRequest) throws Exception{
-        Rebelde rebeldeRemetente = StarWarsApiApplication.bdRebeldes.buscaRebelde(negociarRequest.getIdRemetente());
-        Rebelde rebeldeDestinatario = StarWarsApiApplication.bdRebeldes.buscaRebelde(negociarRequest.getIdDestinatario());
-
-        HashMap<String,Integer> itensRemetente = new HashMap<>();
-        for(int i = 0;i<negociarRequest.getItemRemetente().size();i++){
-            itensRemetente.put(negociarRequest.getItemRemetente().get(i),negociarRequest.getQtdItemRemetente().get(i));
-        }
-
-        HashMap<String,Integer> itensDestinatario = new HashMap<>();
-        for(int i = 0;i<negociarRequest.getItemDestinatario().size();i++){
-            itensDestinatario.put(negociarRequest.getItemDestinatario().get(i),negociarRequest.getQtdItemDestinatario().get(i));
-        }
-
-
-    }
 }
-
