@@ -2,6 +2,7 @@ package com.starwars.StarWarsAPI.controller;
 
 import com.starwars.StarWarsAPI.StarWarsApiApplication;
 import com.starwars.StarWarsAPI.dto.LocalizacaoRequest;
+import com.starwars.StarWarsAPI.dto.NegociarRequest;
 import com.starwars.StarWarsAPI.dto.RebeldeRequest;
 import com.starwars.StarWarsAPI.dto.RebeldeResponse;
 import com.starwars.StarWarsAPI.exceptions.ResponseMessege;
@@ -72,5 +73,11 @@ public class RebeldeController {
     public ResponseEntity<RebeldeResponse> reportarTraidor(@PathVariable UUID id) throws Exception {
         Rebelde rebelde =  rebeldeService.reportarTraidor(id);
         return ResponseEntity.ok().body(new RebeldeResponse(rebelde));
+    }
+
+    @PatchMapping("/negociar")
+    @ResponseBody
+    public ResponseEntity negociar(@RequestBody NegociarRequest negociarRequest){
+        return (ResponseEntity) ResponseEntity.accepted();
     }
 }
