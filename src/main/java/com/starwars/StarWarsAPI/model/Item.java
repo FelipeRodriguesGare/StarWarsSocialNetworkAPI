@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor
 public class Item {
-    protected int pontos;
     private int quantidade;
+    protected int pontos;
 
     public Item(int pontos){
         this.pontos = pontos;

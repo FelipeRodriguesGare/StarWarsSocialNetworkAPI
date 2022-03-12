@@ -6,9 +6,10 @@ import com.starwars.StarWarsAPI.dto.NegociarRequest;
 import com.starwars.StarWarsAPI.dto.RebeldeRequest;
 import com.starwars.StarWarsAPI.dto.RebeldeResponse;
 import com.starwars.StarWarsAPI.exceptions.ResponseMessege;
-import com.starwars.StarWarsAPI.model.Localizacao;
 import com.starwars.StarWarsAPI.model.Rebelde;
+import com.starwars.StarWarsAPI.service.NegociarService;
 import com.starwars.StarWarsAPI.service.RebeldeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +27,8 @@ import java.util.UUID;
 public class RebeldeController {
     RebeldeService rebeldeService = new RebeldeService();
     RebeldeResponse rebeldeResponse = new RebeldeResponse();
+    @Autowired
+    NegociarService negociarService;
 
     @GetMapping
     @ResponseBody
@@ -77,7 +79,7 @@ public class RebeldeController {
 
     @PatchMapping("/negociar")
     @ResponseBody
-    public ResponseEntity negociar(@RequestBody NegociarRequest negociarRequest){
-        return (ResponseEntity) ResponseEntity.accepted();
+    public ResponseEntity<String> negociar(@RequestBody NegociarRequest negociarRequest) throws Exception {
+        return ResponseEntity.ok().body(negociarService.negociar(negociarRequest));
     }
 }
