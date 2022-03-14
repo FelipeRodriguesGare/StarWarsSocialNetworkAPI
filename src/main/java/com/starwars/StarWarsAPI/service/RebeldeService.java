@@ -2,8 +2,8 @@ package com.starwars.StarWarsAPI.service;
 
 import com.starwars.StarWarsAPI.StarWarsApiApplication;
 import com.starwars.StarWarsAPI.dto.LocalizacaoRequest;
+import com.starwars.StarWarsAPI.dto.NegociarRequest;
 import com.starwars.StarWarsAPI.dto.RebeldeRequest;
-import com.starwars.StarWarsAPI.model.BDRebeldes;
 import com.starwars.StarWarsAPI.model.Localizacao;
 import com.starwars.StarWarsAPI.model.Rebelde;
 
@@ -28,4 +28,11 @@ public class RebeldeService {
 
         return rebelde;
     }
+
+    public Rebelde reportarTraidor(UUID id) throws Exception{
+        Rebelde rebelde = StarWarsApiApplication.bdRebeldes.buscaRebelde(id);
+        rebelde.reportTraidor();
+        return rebelde;
+    }
+
 }

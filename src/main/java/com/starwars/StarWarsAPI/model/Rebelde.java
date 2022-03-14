@@ -8,11 +8,12 @@ import java.util.UUID;
 @Getter @Setter
 public class Rebelde {
     private UUID id;
-    String nome;
-    int idade;
-    String genero;
-    Boolean traidor;
-    Localizacao localizacao;
+    private String nome;
+    private int idade;
+    private String genero;
+    private Boolean traidor;
+    private Localizacao localizacao;
+    private Inventario inventario;
 
     int contReportTraidor;
 
@@ -23,9 +24,10 @@ public class Rebelde {
         this.genero = genero;
         this.traidor = false;
         this.localizacao = localizacao;
+        this.inventario = new Inventario();
     }
 
-    private void reportTraidor(){
+    public void reportTraidor(){
         this.contReportTraidor++;
         if(this.contReportTraidor >= 3){
             this.traidor = true;
