@@ -8,7 +8,10 @@ import java.util.UUID;
 @Getter @Setter
 public class Rebelde {
     private UUID id;
+    private String username;
+    private String senha;
     private String nome;
+    private String avatar;
     private int idade;
     private String genero;
     private Boolean traidor;
@@ -17,8 +20,11 @@ public class Rebelde {
 
     int contReportTraidor;
 
-    public Rebelde(String nome, int idade, String genero, Localizacao localizacao) {
+    public Rebelde(String nome, String username, String senha, String avatar,int idade, String genero, Localizacao localizacao) {
         this.id = UUID.randomUUID();
+        this.username = username;
+        this.senha = senha;
+        this.avatar = avatar;
         this.nome = nome;
         this.idade = idade;
         this.genero = genero;

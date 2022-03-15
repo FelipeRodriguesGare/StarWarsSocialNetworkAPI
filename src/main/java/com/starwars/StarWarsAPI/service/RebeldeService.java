@@ -2,7 +2,6 @@ package com.starwars.StarWarsAPI.service;
 
 import com.starwars.StarWarsAPI.StarWarsApiApplication;
 import com.starwars.StarWarsAPI.dto.LocalizacaoRequest;
-import com.starwars.StarWarsAPI.dto.NegociarRequest;
 import com.starwars.StarWarsAPI.dto.RebeldeRequest;
 import com.starwars.StarWarsAPI.model.Localizacao;
 import com.starwars.StarWarsAPI.model.Rebelde;
@@ -13,7 +12,17 @@ public class RebeldeService {
 
     public Rebelde criaRebelde(RebeldeRequest rebeldeRequest) {
         Localizacao localizacao = new Localizacao(rebeldeRequest.getLocalizacao().getNomeDaGalaxia());
-        Rebelde rebelde = new Rebelde(rebeldeRequest.getNome(), rebeldeRequest.getIdade(), rebeldeRequest.getGenero(), localizacao);
+
+        Rebelde rebelde = new Rebelde(
+                rebeldeRequest.getNome(),
+                rebeldeRequest.getUsername(),
+                rebeldeRequest.getSenha(),
+                rebeldeRequest.getAvatar(),
+                rebeldeRequest.getIdade(),
+                rebeldeRequest.getGenero(),
+                localizacao
+        );
+
         StarWarsApiApplication.bdRebeldes.addRebelde(rebelde);
         return rebelde;
     }

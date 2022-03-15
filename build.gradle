@@ -26,6 +26,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
+	implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.16'
+
 }
 
 tasks.named('test') {
