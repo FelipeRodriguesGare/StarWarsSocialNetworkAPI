@@ -1,11 +1,13 @@
 package com.starwars.StarWarsAPI.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.UUID;
 
 @Getter @Setter
+@AllArgsConstructor
 public class Rebelde {
     private UUID id;
     private String username;
@@ -31,6 +33,21 @@ public class Rebelde {
         this.traidor = false;
         this.localizacao = localizacao;
         this.inventario = new Inventario();
+        this.contReportTraidor = 0;
+    }
+
+    public Rebelde(UUID id, String username, String senha, String nome, String avatar, int idade, String genero, boolean traidor, Localizacao localizacao, Inventario inventario, int contReportTraidor){
+        this.id=id;
+        this.username=username;
+        this.senha=senha;
+        this.nome=nome;
+        this.avatar=avatar;
+        this.idade=idade;
+        this.genero=genero;
+        this.traidor=traidor;
+        this.localizacao=localizacao;
+        this.inventario=inventario;
+        this.contReportTraidor = contReportTraidor;
     }
 
     public void reportTraidor(){
