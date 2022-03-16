@@ -1,11 +1,13 @@
 package com.starwars.StarWarsAPI.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.UUID;
 
 @Getter @Setter
+@AllArgsConstructor
 public class Localizacao {
     private long latitude;
     private long longitude;
