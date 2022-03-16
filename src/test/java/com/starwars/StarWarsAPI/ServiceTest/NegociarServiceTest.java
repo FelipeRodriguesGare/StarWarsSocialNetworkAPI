@@ -24,7 +24,7 @@ public class NegociarServiceTest {
         localizacao.setNomeDaGalaxia("testeGaláxia");
         localizacao.setLongitude(0L);
         localizacao.setLatitude(0L);
-        RebeldeRequest rebelde = new RebeldeRequest("nomeTeste",10,"masculino", localizacao);
+        RebeldeRequest rebelde = new RebeldeRequest("teste","1234","nomeTeste","Avatar1",10,"masculino", localizacao);
 
         Rebelde remetente = rebeldeService.criaRebelde(rebelde);
         Rebelde destinatario = rebeldeService.criaRebelde(rebelde);

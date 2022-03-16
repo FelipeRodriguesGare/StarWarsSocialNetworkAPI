@@ -20,6 +20,7 @@ public class RebeldeResponse {
     private Boolean traidor;
     private Localizacao localizacao;
     private Inventario Inventario;
+    private String avatar;
 
     public RebeldeResponse(Rebelde rebelde){
         this.id = rebelde.getId();
@@ -29,6 +30,7 @@ public class RebeldeResponse {
         this.traidor = rebelde.getTraidor();
         this.localizacao = rebelde.getLocalizacao();
         this.Inventario = rebelde.getInventario();
+        this.avatar = rebelde.getAvatar();
     }
 
     public List<RebeldeResponse> toResponse(List<Rebelde> rebelde) {
