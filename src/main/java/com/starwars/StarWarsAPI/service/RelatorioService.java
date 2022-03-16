@@ -57,8 +57,8 @@ public class RelatorioService {
         mediaMunicao /= listSize;
         mediaAgua /= listSize;
         mediaComida /= listSize;
-        return String.format("Relatório de items:%.2f armas por rebelde," +
-                        "%.2f munições por rebelde,%.2f aguas por rebelde,%.2f comidas por rebelde."
+        return String.format("Relatório de items: %.2f armas por rebelde; " +
+                        "%.2f munições por rebelde; %.2f aguas por rebelde; %.2f comidas por rebelde; "
                 ,mediaArma,mediaMunicao,mediaAgua,mediaComida);
     }
 
