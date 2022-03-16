@@ -1,6 +1,5 @@
 package com.starwars.StarWarsAPI.controller;
 
-import com.starwars.StarWarsAPI.StarWarsApiApplication;
 import com.starwars.StarWarsAPI.dto.LocalizacaoRequest;
 import com.starwars.StarWarsAPI.dto.NegociarRequest;
 import com.starwars.StarWarsAPI.dto.RebeldeRequest;
@@ -25,7 +24,8 @@ import java.util.UUID;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/rebeldes")
 public class RebeldeController {
-    RebeldeService rebeldeService = new RebeldeService();
+    @Autowired
+    RebeldeService rebeldeService;
     RebeldeResponse rebeldeResponse = new RebeldeResponse();
     @Autowired
     NegociarService negociarService;
@@ -33,7 +33,7 @@ public class RebeldeController {
     @GetMapping
     @ResponseBody
     public ResponseEntity<Object> buscarRebeldes(){
-        List<RebeldeResponse> rebeldeResponse2 = rebeldeResponse.toResponse(StarWarsApiApplication.bdRebeldes.listarRebeldes());
+        List<RebeldeResponse> rebeldeResponse2 = rebeldeResponse.toResponse(rebeldeService.listarRebeldes());
         if(rebeldeResponse2.isEmpty()){
             return new ResponseEntity<>(new ResponseMessege("Não há registro."), HttpStatus.NO_CONTENT);
         }
@@ -55,11 +55,18 @@ public class RebeldeController {
     @ResponseBody
     public ResponseEntity<Object> buscaRebelde(@PathVariable UUID id)  {
         try{
-            Rebelde rebelde = StarWarsApiApplication.bdRebeldes.buscaRebelde(id);
+            Rebelde rebelde = rebeldeService.buscaRebelde(id);
             return ResponseEntity.accepted().body(new RebeldeResponse(rebelde));
         }catch (Exception e) {
             return new ResponseEntity<>(new ResponseMessege("Registro não encontrado."), HttpStatus.NOT_FOUND);
         }
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<Object> removeRebelde(@PathVariable UUID id) throws Exception {
+        rebeldeService.removeRebelde(id);
+        return new ResponseEntity<>(new ResponseMessege("Registro Deletado."), HttpStatus.OK);
     }
 
     @PatchMapping("/atualizarlocalizacao/{id}")
@@ -85,6 +92,6 @@ public class RebeldeController {
     @ResponseBody
     public ResponseEntity<Object> negociar(@RequestBody NegociarRequest negociarRequest) throws Exception {
         String message = negociarService.negociar(negociarRequest);
-        return message.contains("ERRO")? new ResponseEntity<>(new ResponseMessege("Registro não encontrado."), HttpStatus.BAD_REQUEST):ResponseEntity.ok().body(message);
+        return ResponseEntity.ok().body(new ResponseMessege(message));
     }
 }
