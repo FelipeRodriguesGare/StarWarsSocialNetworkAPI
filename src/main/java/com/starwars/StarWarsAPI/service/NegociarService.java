@@ -14,18 +14,14 @@ public class NegociarService {
     @Qualifier("mysql")
     private RebeldesDAO rebeldesDAO;
 
-    private Boolean checkRebelIsTraitor(Rebelde rebelde) throws Exception {
-        return rebelde.getTraidor();
-    }
-
     private String checkTradeRequest(NegociarRequest negociarRequest) throws Exception {
         Rebelde remetente = rebeldesDAO.getRebeldeByID(negociarRequest.getIdRemetente());
         Rebelde destinatario = rebeldesDAO.getRebeldeByID(negociarRequest.getIdDestinatario());
 
-        if(checkRebelIsTraitor(remetente)) {
-            return "O remetente é um traidor! Portanto está impossibilitado de realizar negociações.";
-        } else if (checkRebelIsTraitor(destinatario)) {
-            return "O destinatário é um traidor! Portanto está impossibilitado de realizar negociações.";
+        if(remetente.getTraidor()) {
+            return "ERRO: O remetente é um traidor! Portanto está impossibilitado de realizar negociações.";
+        } else if (destinatario.getTraidor()) {
+            return "ERRO: O destinatário é um traidor! Portanto está impossibilitado de realizar negociações.";
         }
 
         int pontosRemetente = 0;
@@ -36,7 +32,7 @@ public class NegociarService {
                     remetente.getInventario().getItems().get(item).getQuantidade() <
                             negociarRequest.getQtdItemRemetente().get(negociarRequest.getItemRemetente().indexOf(item))
             ){
-                return "O remetente não possui este item ou não possui a quantidade desejada!";
+                return "ERRO: O remetente não possui este item ou não possui a quantidade desejada!";
             }
             pontosRemetente += remetente.getInventario().getItems().get(item).getPontos()
                     * negociarRequest.getQtdItemRemetente().get(negociarRequest.getItemRemetente().indexOf(item));
@@ -47,7 +43,7 @@ public class NegociarService {
                     destinatario.getInventario().getItems().get(item).getQuantidade() <
                             negociarRequest.getQtdItemDestinatario().get(negociarRequest.getItemDestinatario().indexOf(item))
             ){
-                return "O destinatário não possui este item ou não possui a quantidade desejada!";
+                return "ERRO: O destinatário não possui este item ou não possui a quantidade desejada!";
             }
             pontosDestinatario += destinatario.getInventario().getItems().get(item).getPontos()
                     * negociarRequest.getQtdItemDestinatario().get(negociarRequest.getItemDestinatario().indexOf(item));
@@ -55,7 +51,7 @@ public class NegociarService {
         }
 
         if (pontosRemetente == pontosDestinatario) {
-            return "valido";
+            return "Valido";
         } else {
             return "Os rebeldes não possuem a mesma quantidade de pontos!";
         }
@@ -64,7 +60,8 @@ public class NegociarService {
 
     public String negociar(NegociarRequest negociarRequest) throws Exception{
         String checkTradeRequest = checkTradeRequest(negociarRequest);
-        if(checkTradeRequest == "valido"){
+
+        if(checkTradeRequest.equals("Valido")){
             Rebelde remetente = rebeldesDAO.getRebeldeByID(negociarRequest.getIdRemetente());
             Rebelde destinatario = rebeldesDAO.getRebeldeByID(negociarRequest.getIdDestinatario());
 

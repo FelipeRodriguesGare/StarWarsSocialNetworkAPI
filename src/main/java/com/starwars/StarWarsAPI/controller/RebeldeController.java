@@ -41,15 +41,19 @@ public class RebeldeController {
     }
 
     @PostMapping
-    public ResponseEntity<RebeldeResponse> criaRebelde(@RequestBody @Valid RebeldeRequest rebeldeRequest, UriComponentsBuilder uriComponentsBuilder){
-        Rebelde rebelde = rebeldeService.criaRebelde(rebeldeRequest);
-        URI uri = uriComponentsBuilder.path("/rebeldes/{id}").buildAndExpand(rebelde.getId()).toUri();
-        return ResponseEntity.created(uri).body(new RebeldeResponse(rebelde));
+    public ResponseEntity<Object> criaRebelde(@RequestBody @Valid RebeldeRequest rebeldeRequest, UriComponentsBuilder uriComponentsBuilder){
+        try{
+            Rebelde rebelde = rebeldeService.criaRebelde(rebeldeRequest);
+            URI uri = uriComponentsBuilder.path("/rebeldes/{id}").buildAndExpand(rebelde.getId()).toUri();
+            return ResponseEntity.created(uri).body(new RebeldeResponse(rebelde));
+        } catch (Exception e){
+            return new ResponseEntity<>(new ResponseMessege("Não foi possível criar um novo rebelde."), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<Object> buscaRebelde(@PathVariable UUID id) throws Exception {
+    public ResponseEntity<Object> buscaRebelde(@PathVariable UUID id)  {
         try{
             Rebelde rebelde = rebeldeService.buscaRebelde(id);
             return ResponseEntity.accepted().body(new RebeldeResponse(rebelde));
@@ -67,7 +71,7 @@ public class RebeldeController {
 
     @PatchMapping("/atualizarlocalizacao/{id}")
     @ResponseBody
-    public ResponseEntity<Object> atualizarLocalizacao(@PathVariable UUID id, @RequestBody LocalizacaoRequest localizacaoRequest) throws Exception {
+    public ResponseEntity<Object> atualizarLocalizacao(@PathVariable UUID id, @RequestBody LocalizacaoRequest localizacaoRequest) {
        try{
            Rebelde rebelde =  rebeldeService.atualizarLocalizacao(localizacaoRequest,id);
            return ResponseEntity.ok().body(new RebeldeResponse(rebelde));
@@ -79,14 +83,15 @@ public class RebeldeController {
 
     @PatchMapping("/traidor/{id}")
     @ResponseBody
-    public ResponseEntity<RebeldeResponse> reportarTraidor(@PathVariable UUID id) throws Exception {
+    public ResponseEntity<Object> reportarTraidor(@PathVariable UUID id) throws Exception {
         Rebelde rebelde =  rebeldeService.reportarTraidor(id);
-        return ResponseEntity.ok().body(new RebeldeResponse(rebelde));
+        return this.buscaRebelde(id).getStatusCode().is2xxSuccessful()? ResponseEntity.ok().body(new RebeldeResponse(rebelde)):new ResponseEntity<>(new ResponseMessege("Rebelde não encontrado para ser reportado."), HttpStatus.NOT_FOUND);
     }
 
     @PatchMapping("/negociar")
     @ResponseBody
-    public ResponseEntity<String> negociar(@RequestBody NegociarRequest negociarRequest) throws Exception {
-        return ResponseEntity.ok().body(negociarService.negociar(negociarRequest));
+    public ResponseEntity<Object> negociar(@RequestBody NegociarRequest negociarRequest) throws Exception {
+        String message = negociarService.negociar(negociarRequest);
+        return message.contains("ERRO")? new ResponseEntity<>(new ResponseMessege("Registro não encontrado."), HttpStatus.BAD_REQUEST):ResponseEntity.ok().body(message);
     }
 }
