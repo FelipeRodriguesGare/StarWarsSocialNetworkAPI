@@ -4,6 +4,7 @@ import com.starwars.StarWarsAPI.StarWarsApiApplication;
 import com.starwars.StarWarsAPI.dto.LocalizacaoRequest;
 import com.starwars.StarWarsAPI.dto.NegociarRequest;
 import com.starwars.StarWarsAPI.dto.RebeldeRequest;
+import com.starwars.StarWarsAPI.model.Inventario;
 import com.starwars.StarWarsAPI.model.Localizacao;
 import com.starwars.StarWarsAPI.model.Rebelde;
 

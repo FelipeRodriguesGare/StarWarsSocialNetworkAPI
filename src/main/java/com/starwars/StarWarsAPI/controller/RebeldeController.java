@@ -9,6 +9,7 @@ import com.starwars.StarWarsAPI.exceptions.ResponseMessege;
 import com.starwars.StarWarsAPI.model.Rebelde;
 import com.starwars.StarWarsAPI.service.NegociarService;
 import com.starwars.StarWarsAPI.service.RebeldeService;
+import com.starwars.StarWarsAPI.service.relatorioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -81,5 +82,11 @@ public class RebeldeController {
     @ResponseBody
     public ResponseEntity<String> negociar(@RequestBody NegociarRequest negociarRequest) throws Exception {
         return ResponseEntity.ok().body(negociarService.negociar(negociarRequest));
+    }
+
+    @GetMapping("/traidores")
+    @ResponseBody
+    public String traidores(){
+        return relatorioService.traitorsReport();
     }
 }
