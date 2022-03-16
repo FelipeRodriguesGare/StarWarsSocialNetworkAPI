@@ -92,6 +92,6 @@ public class RebeldeController {
     @ResponseBody
     public ResponseEntity<Object> negociar(@RequestBody NegociarRequest negociarRequest) throws Exception {
         String message = negociarService.negociar(negociarRequest);
-        return message.contains("ERRO")? new ResponseEntity<>(new ResponseMessege("Registro não encontrado."), HttpStatus.BAD_REQUEST):ResponseEntity.ok().body(message);
+        return ResponseEntity.ok().body(new ResponseMessege(message));
     }
 }
