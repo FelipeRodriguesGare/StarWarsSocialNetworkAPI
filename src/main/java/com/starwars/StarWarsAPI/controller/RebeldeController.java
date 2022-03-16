@@ -8,7 +8,7 @@ import com.starwars.StarWarsAPI.exceptions.ResponseMessege;
 import com.starwars.StarWarsAPI.model.Rebelde;
 import com.starwars.StarWarsAPI.service.NegociarService;
 import com.starwars.StarWarsAPI.service.RebeldeService;
-import com.starwars.StarWarsAPI.service.relatorioService;
+import com.starwars.StarWarsAPI.service.RelatorioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -96,9 +96,31 @@ public class RebeldeController {
         return ResponseEntity.ok().body(new ResponseMessege(message));
     }
 
-    @GetMapping("/traidores")
+    @GetMapping("/report/traidores")
     @ResponseBody
-    public String traidores(){
-        return relatorioService.traitorsReport();
+    public ResponseEntity<Object> traidoresReport() throws Exception{
+        List<RebeldeResponse> rebeldeResponse2 = rebeldeResponse.toResponse(rebeldeService.listarRebeldes());
+        return ResponseEntity.ok().body(new ResponseMessege(RelatorioService.traitorsReport(rebeldeResponse2)));
+    }
+
+    @GetMapping("/report/rebeldes")
+    @ResponseBody
+    public ResponseEntity<Object> rebeldesReport() throws Exception{
+        List<RebeldeResponse> rebeldeResponse2 = rebeldeResponse.toResponse(rebeldeService.listarRebeldes());
+        return ResponseEntity.ok().body(new ResponseMessege(RelatorioService.rebeldesReport(rebeldeResponse2)));
+    }
+
+    @GetMapping("/report/recursos")
+    @ResponseBody
+    public ResponseEntity<Object> recursosReport() throws Exception{
+        List<RebeldeResponse> rebeldeResponse2 = rebeldeResponse.toResponse(rebeldeService.listarRebeldes());
+        return ResponseEntity.ok().body(new ResponseMessege(RelatorioService.recursosReport(rebeldeResponse2)));
+    }
+
+    @GetMapping("/report/pontosperdidos")
+    @ResponseBody
+    public ResponseEntity<Object> pontosReport() throws Exception{
+        List<RebeldeResponse> rebeldeResponse2 = rebeldeResponse.toResponse(rebeldeService.listarRebeldes());
+        return ResponseEntity.ok().body(new ResponseMessege(RelatorioService.pontosReport(rebeldeResponse2)));
     }
 }

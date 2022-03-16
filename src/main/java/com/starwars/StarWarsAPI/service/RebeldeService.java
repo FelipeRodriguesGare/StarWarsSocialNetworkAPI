@@ -3,7 +3,6 @@ package com.starwars.StarWarsAPI.service;
 import com.starwars.StarWarsAPI.data_base.RebeldesDAO;
 import com.starwars.StarWarsAPI.dto.LocalizacaoRequest;
 import com.starwars.StarWarsAPI.dto.RebeldeRequest;
-import com.starwars.StarWarsAPI.model.Inventario;
 import com.starwars.StarWarsAPI.model.Localizacao;
 import com.starwars.StarWarsAPI.model.Rebelde;
 import org.springframework.beans.factory.annotation.Autowired;
