@@ -10,7 +10,7 @@ import java.util.UUID;
 @Service
 public class NegociarService {
 
-    private Boolean checkRebelIsTraitor(Rebelde rebelde) throws Exception {
+    private Boolean checkRebelIsTraitor(Rebelde rebelde) {
         return rebelde.getTraidor();
     }
 
@@ -19,9 +19,9 @@ public class NegociarService {
         Rebelde destinatario = StarWarsApiApplication.bdRebeldes.buscaRebelde(negociarRequest.getIdDestinatario());
 
         if(checkRebelIsTraitor(remetente)) {
-            return "O remetente é um traidor! Portanto está impossibilitado de realizar negociações.";
+            return "ERRO: O remetente é um traidor! Portanto está impossibilitado de realizar negociações.";
         } else if (checkRebelIsTraitor(destinatario)) {
-            return "O destinatário é um traidor! Portanto está impossibilitado de realizar negociações.";
+            return "ERRO: O destinatário é um traidor! Portanto está impossibilitado de realizar negociações.";
         }
 
         int pontosRemetente = 0;
@@ -32,7 +32,7 @@ public class NegociarService {
                     remetente.getInventario().getItems().get(item).getQuantidade() <
                             negociarRequest.getQtdItemRemetente().get(negociarRequest.getItemRemetente().indexOf(item))
             ){
-                return "O remetente não possui este item ou não possui a quantidade desejada!";
+                return "ERRO: O remetente não possui este item ou não possui a quantidade desejada!";
             }
             pontosRemetente += remetente.getInventario().getItems().get(item).getPontos()
                     * negociarRequest.getQtdItemRemetente().get(negociarRequest.getItemRemetente().indexOf(item));
@@ -43,7 +43,7 @@ public class NegociarService {
                     destinatario.getInventario().getItems().get(item).getQuantidade() <
                             negociarRequest.getQtdItemDestinatario().get(negociarRequest.getItemDestinatario().indexOf(item))
             ){
-                return "O destinatário não possui este item ou não possui a quantidade desejada!";
+                return "ERRO: O destinatário não possui este item ou não possui a quantidade desejada!";
             }
             pontosDestinatario += destinatario.getInventario().getItems().get(item).getPontos()
                     * negociarRequest.getQtdItemDestinatario().get(negociarRequest.getItemDestinatario().indexOf(item));
@@ -51,7 +51,7 @@ public class NegociarService {
         }
 
         if (pontosRemetente == pontosDestinatario) {
-            return "valido";
+            return "Válido";
         } else {
             return "Os rebeldes não possuem a mesma quantidade de pontos!";
         }
@@ -60,7 +60,7 @@ public class NegociarService {
 
     public String negociar(NegociarRequest negociarRequest) throws Exception{
         String checkTradeRequest = checkTradeRequest(negociarRequest);
-        if(checkTradeRequest == "valido"){
+        if(checkTradeRequest.equals("valido")){
             Rebelde remetente = StarWarsApiApplication.bdRebeldes.buscaRebelde(negociarRequest.getIdRemetente());
             Rebelde destinatario = StarWarsApiApplication.bdRebeldes.buscaRebelde(negociarRequest.getIdDestinatario());
 
