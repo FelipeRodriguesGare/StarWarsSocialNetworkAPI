@@ -44,7 +44,7 @@ public class RelatorioService {
 
     public static String recursosReport(List<RebeldeResponse> listaRebeldes) {
         List<RebeldeResponse> listaRebeldes2 = listaRebeldes.stream()
-                .filter(RebeldeResponse -> !RebeldeResponse.getTraidor()).collect(Collectors.toList());
+                .filter(RebeldeResponse -> RebeldeResponse.getTraidor() == false).collect(Collectors.toList());
         float mediaArma = 0, mediaMunicao = 0, mediaAgua = 0, mediaComida = 0;
         for (com.starwars.StarWarsAPI.dto.RebeldeResponse RebeldeResponse : listaRebeldes2) {
             mediaArma += RebeldeResponse.getInventario().getItems().get("arma").getQuantidade();
@@ -52,7 +52,7 @@ public class RelatorioService {
             mediaAgua += RebeldeResponse.getInventario().getItems().get("agua").getQuantidade();
             mediaComida += RebeldeResponse.getInventario().getItems().get("comida").getQuantidade();
         }
-        var listSize = listaRebeldes.size();
+        var listSize = listaRebeldes2.size();
         mediaArma /= listSize;
         mediaMunicao /= listSize;
         mediaAgua /= listSize;
@@ -67,9 +67,10 @@ public class RelatorioService {
                 .filter(RebeldeResponse::getTraidor).collect(Collectors.toList());
         int pontosPerdidos = 0;
         for (com.starwars.StarWarsAPI.dto.RebeldeResponse RebeldeResponse : listaTraidores) {
-            pontosPerdidos += (RebeldeResponse.getInventario().getItems().get("arma").getQuantidade()*4) + (RebeldeResponse.getInventario().getItems().get("municao").getQuantidade()*4) +
-                    (RebeldeResponse.getInventario().getItems().get("agua").getQuantidade()*4) + (RebeldeResponse.getInventario().getItems().get("comida").getQuantidade()*4);
+            pontosPerdidos += (RebeldeResponse.getInventario().getItems().get("arma").getQuantidade()*RebeldeResponse.getInventario().getItems().get("arma").getPontos()) + (RebeldeResponse.getInventario().getItems().get("municao").getQuantidade()*RebeldeResponse.getInventario().getItems().get("municao").getPontos()) +
+                    (RebeldeResponse.getInventario().getItems().get("agua").getQuantidade()*RebeldeResponse.getInventario().getItems().get("agua").getPontos()) + (RebeldeResponse.getInventario().getItems().get("comida").getQuantidade()*RebeldeResponse.getInventario().getItems().get("comida").getPontos());
         }
+
         return "Foram perdidos "+pontosPerdidos+" pontos devido a traidores";
     }
 
